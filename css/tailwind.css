@@ -1,0 +1,422 @@
+/* =========================
+   Tailwind base layers
+   ========================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+   CSS Variables + Theme
+   ========================= */
+:root {
+  --primary: #FF6B4A;
+  --secondary: #FFB703;
+  --accent: #FF9AA2;
+  --darkbg: #141414;
+  --lightbg: #FAF7F2;
+  --textdark: #1E1E1E;
+  --textlight: #E5E5E5;
+  --cardlight: #FFFFFF;
+  --carddark: #1F1F1F;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* =========================
+   Navigation
+   ========================= */
+.nav-link {
+  @apply relative text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-secondary transition-colors duration-200;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute left-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-secondary;
+  width: 0;
+  transition: width 0.2s ease-in-out;
+}
+
+.nav-link:hover::after,
+.nav-link.text-primary::after {
+  width: 100%;
+}
+
+/* Mobile menu open state */
+#mobile-menu.open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hamburger animation */
+#mobile-menu-btn.open .hamburger-line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+#mobile-menu-btn.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+#mobile-menu-btn.open .hamburger-line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* =========================
+   Sections
+   ========================= */
+.section {
+  @apply w-full;
+}
+
+.section.active {
+  @apply block;
+}
+
+/* =========================
+   Hero / Home (index.html)
+   ========================= */
+.role-label {
+  letter-spacing: 0.25em;
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+.hero-name {
+  @apply tracking-tight;
+}
+
+.hero-summary {
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+.skill-tag {
+  @apply inline-flex items-center gap-1 text-xs sm:text-sm font-medium whitespace-nowrap;
+}
+
+/* Buttons (used in all pages) */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 text-sm sm:text-base font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply bg-[var(--primary)] text-white shadow-lg shadow-primary/30 hover:shadow-neon hover:-translate-y-0.5 transition-all duration-200;
+}
+
+.btn-secondary {
+  @apply text-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 hover:-translate-y-0.5 transition-all duration-200;
+}
+
+.hero-card {
+  @apply relative backdrop-blur-2xl bg-white/10 dark:bg-black/20 border border-white/30 dark:border-white/10 rounded-3xl shadow-[0_25px_80px_rgba(0, 0, 0, 0.65)] overflow-hidden transform transition-all duration-500;
+}
+
+.hero-card:hover {
+  transform: translateY(-12px) rotate(1deg);
+}
+
+.hero-stat {
+  @apply p-3 rounded-2xl bg-white/60 dark:bg-white/5 border border-white/60 dark:border-white/10;
+}
+
+.hero-stat-title {
+  @apply font-semibold text-sm;
+}
+
+.hero-stat-sub {
+  @apply text-[11px] uppercase tracking-wide text-gray-600 dark:text-gray-300;
+}
+
+/* =========================
+   About page: cards, orbs, timeline
+   ========================= */
+
+/* Skill orbs inside the left card */
+.skill-orb {
+  /* Base appearance is already long in HTML via Tailwind classes,
+     this keeps a bit of consistency if reused elsewhere */
+  @apply inline-flex items-center justify-center whitespace-nowrap;
+}
+
+/* Timeline container points */
+.timeline-point {
+  position: relative;
+}
+
+/* Optional: small connector dot to the main vertical line for mobile */
+@media (max-width: 1023px) {
+  .timeline-point::before {
+    content: "";
+    position: absolute;
+    left: 0.4rem;
+    top: 1.6rem;
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, #3b82f6, #a855f7, #10b981);
+    opacity: 0.8;
+  }
+}
+
+/* =========================
+   Animations (about.html)
+   ========================= */
+
+/* Float animations for the background blobs */
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-18px) translateX(6px);
+  }
+}
+
+@keyframes float-medium {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-22px) translateX(-8px);
+  }
+}
+
+@keyframes float-fast {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-14px) translateX(10px);
+  }
+}
+
+/* Class hooks used in HTML */
+.animate-float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 6.5s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4.5s ease-in-out infinite;
+}
+
+/* Fade-in-up for the "About Me" title block */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out both;
+}
+
+/* Hover scale-115 helper used on timeline badges */
+.group\/timeline:hover .group-hover\/timeline\:scale-115 {
+  transform: scale(1.15);
+}
+
+.group\/timeline:hover .group-hover\/timeline\:rotate-12 {
+  transform: rotate(12deg);
+}
+
+.group\/timeline:hover .group-hover\/timeline\:translate-x-4 {
+  transform: translateX(1rem);
+}
+
+/* Text color transitions on timeline points (handled via Tailwind classes in HTML),
+   just ensure smooth transition: */
+.timeline-point p {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* =========================
+   Utility + shared helpers
+   ========================= */
+.shadow-neon {
+  box-shadow: 0 0 40px rgba(255, 107, 74, 0.45);
+}
+
+.shadow-card {
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .hero-card {
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
+}
+
+/* Scrollbar styling (optional) */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.6);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.9);
+}
+
+/* Small responsive tweaks */
+@media (max-width: 640px) {
+  .hero-name {
+    line-height: 1.1;
+  }
+
+  .hero-summary {
+    font-size: 0.95rem;
+  }
+}
+.hamburger-line:nth-child(1) {
+   transition-delay: 0ms;
+ }
+
+ .hamburger-line:nth-child(2) {
+   transition-delay: 50ms;
+ }
+
+ .hamburger-line:nth-child(3) {
+   transition-delay: 100ms;
+ }
+
+ #mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(1) {
+   transform: translateY(8px) rotate(45deg);
+ }
+
+ #mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(2) {
+   opacity: 0;
+ }
+
+ #mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(3) {
+   transform: translateY(-8px) rotate(-45deg);
+ }
+
+ .nav-link {
+   @apply relative transition-all duration-300 hover:text-[#FF6B4A];
+ }
+
+ .nav-link::after {
+   content: '';
+   @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF6B4A] to-[#FFB703] transition-all duration-300;
+ }
+
+ .nav-link:hover::after {
+   @apply w-full;
+ }
+
+ .text-primary {
+   @apply text-[#FF6B4A];
+ }
+
+ .timeline-card {
+   @apply group-hover/card:shadow-emerald-500/20;
+ }
+
+ /* Custom utility classes missing from original code */
+ .skill-box {
+   @apply px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-center border border-gray-200 dark:border-gray-700 font-medium transition-all hover:border-orange-500 hover:text-orange-600;
+ }
+
+ /* Using standard CSS for complex components */
+ .highlight-card {
+   padding: 0.75rem;
+   border-radius: 0.75rem;
+   background: rgba(249, 115, 22, 0.05);
+   border: 1px dashed #f97316;
+   text-align: center;
+   font-weight: 500;
+   color: #ea580c;
+ }
+
+ .social-btn {
+   width: 40px;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 0.75rem;
+   border: 1px solid #e5e7eb;
+   transition: all 0.3s ease;
+ }
+
+ .dark .social-btn {
+   border-color: #374151;
+ }
+
+ .social-btn:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+ }
+     .skill-pill-creative {
+       @apply px-3 py-1 bg-white dark:bg-gray-800 rounded-md text-xs font-bold border border-emerald-200 dark:border-emerald-800 shadow-sm;
+     }
+                @keyframes fade-in-up {
+                  from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                  }
+        
+                  to {
+                    opacity: 1;
+                    transform: translateY(0);
+                  }
+                }
+        
+                .animate-fade-in-up {
+                  animation: fade-in-up 0.8s ease-out;
+                }
+                                    .tech {
+                                      padding: .5rem 1rem;
+                                      border-radius: .75rem;
+                                      background: #f3f4f6;
+                                      font-weight: 600;
+                                    }
+              .proj-tag {
+               @apply px-3 py-1 text-xs font-semibold bg-orange-100 text-orange-800 rounded-full dark:bg-orange-900/50 dark:text-orange-300;
+  }
+    .skill-chip {
+      font-size: 0.875rem;
+      /* 14px → clean & readable */
+    }
+        .skill-chip {
+          font-size: 1rem;
+          padding: 6px 12px;
+          border-radius: 9999px;
+          background-color: #e29f79;
+        }
